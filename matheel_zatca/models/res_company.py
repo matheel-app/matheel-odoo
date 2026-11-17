@@ -20,15 +20,27 @@ class ResCompany(models.Model):
     matheel_device_token = fields.Char(groups="base.group_system", copy=False)
     matheel_device_serial = fields.Char("ZATCA device serial", readonly=True, copy=False)
     matheel_certificate_expires_at = fields.Char("Certificate expires", readonly=True, copy=False)
+    matheel_warning = fields.Text("ZATCA needs attention", readonly=True, copy=False)
 
-    def _matheel_request(self, path, body):
+    def _matheel_owner(self):
+        """The company whose device files this one's invoices: itself, or the root company for a branch with no device."""
+        self.ensure_one()
+        return self if self.sudo().matheel_device_token else self.root_id.sudo()
+
+    def _matheel_lock(self):
+        """Locks this company's ZATCA chain until commit (the cron files under the same lock) and re-reads its token."""
+        # NO KEY UPDATE, not UPDATE: invoices and other rows referencing the company can still be inserted meanwhile.
+        self.env.cr.execute("SELECT 1 FROM res_company WHERE id = %s FOR NO KEY UPDATE", [self.id])
+        self.invalidate_recordset(["matheel_device_token"])
+
+    def _matheel_request(self, path, body, timeout=90):
         """POSTs to the Matheel API and returns (http_status, decoded_json); network errors come back as status 0."""
         self.ensure_one()
-        headers = {"Content-Type": "application/json", "User-Agent": "matheel-odoo/17.0.1.0.0"}
+        headers = {"Content-Type": "application/json", "User-Agent": "matheel-odoo/17.0.1.1.0"}
         if self.sudo().matheel_api_key:
             headers["Authorization"] = "Bearer " + self.sudo().matheel_api_key.strip()
         try:
-            res = requests.post(MATHEEL_API + path, json=body, headers=headers, timeout=90)
+            res = requests.post(MATHEEL_API + path, json=body, headers=headers, timeout=timeout)
         except requests.RequestException as e:
             return 0, {"error": "network", "detail": str(e)}
         try:
@@ -66,6 +78,7 @@ class ResCompany(models.Model):
         }
         if otp:
             body["otp"] = otp.strip()
+        self._matheel_lock()  # a new chain: never while an invoice is being filed on the old one
         status, res = self._matheel_request("/onboarding", body)
         if status != 200:
             raise UserError(_("Matheel %(status)s: %(detail)s", status=status, detail=res))
@@ -77,12 +90,14 @@ class ResCompany(models.Model):
                 "matheel_device_token": res["device_token"],
                 "matheel_device_serial": (res.get("device") or {}).get("serial"),
                 "matheel_certificate_expires_at": (res.get("device") or {}).get("certificate_expires_at"),
+                "matheel_warning": False,
             }
         )
 
     def matheel_renew(self, otp):
         """Renews the device certificate with a fresh OTP; the invoice chain carries over."""
         self.ensure_one()
+        self._matheel_lock()  # renew the latest token, not one an invoice filed a moment ago replaced
         status, res = self._matheel_request(
             "/onboarding/renew", {"device_token": self.sudo().matheel_device_token, "otp": (otp or "").strip()}
         )
@@ -92,5 +107,6 @@ class ResCompany(models.Model):
             {
                 "matheel_device_token": res["device_token"],
                 "matheel_certificate_expires_at": (res.get("device") or {}).get("certificate_expires_at"),
+                "matheel_warning": False,
             }
         )
