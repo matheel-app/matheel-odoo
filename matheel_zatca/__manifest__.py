@@ -20,6 +20,4 @@
     "images": ["static/description/banner.png"],
     "installable": True,
     "application": False,
-    "price": 0,
-    "currency": "USD",
 }
