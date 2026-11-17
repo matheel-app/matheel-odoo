@@ -1,9 +1,9 @@
-# Odoo manifest for the Matheel ZATCA Phase 2 connector (Odoo 17 Community and Enterprise).
+# Odoo manifest for the Matheel ZATCA Phase 2 connector (Odoo 18 Community and Enterprise).
 {
     "name": "ZATCA Phase 2 E-Invoicing (Matheel) | الفوترة الإلكترونية زاتكا",
     "summary": "Free ZATCA Phase 2 connector: every posted invoice is cleared or reported, with QR and bilingual PDF/A-3. No certificates to manage.",
     "description": "Posted customer invoices and credit notes are filed with ZATCA through the Matheel API (matheel.app).",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting/Localizations/EDI",
     "author": "Matheel",
     "website": "https://matheel.app/odoo",

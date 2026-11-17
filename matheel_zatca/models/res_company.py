@@ -24,7 +24,7 @@ class ResCompany(models.Model):
     def _matheel_request(self, path, body):
         """POSTs to the Matheel API and returns (http_status, decoded_json); network errors come back as status 0."""
         self.ensure_one()
-        headers = {"Content-Type": "application/json", "User-Agent": "matheel-odoo/17.0.1.0.0"}
+        headers = {"Content-Type": "application/json", "User-Agent": "matheel-odoo/18.0.1.0.0"}
         if self.sudo().matheel_api_key:
             headers["Authorization"] = "Bearer " + self.sudo().matheel_api_key.strip()
         try:
