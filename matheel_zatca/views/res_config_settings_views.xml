@@ -11,6 +11,10 @@
                     <setting string="Connection" help="Leave the key empty and keep Sandbox to try it free. اترك المفتاح فاضي وجرّب على Sandbox مجاناً.">
                         <field name="matheel_connected" invisible="1"/>
                         <div class="content-group mt-2">
+                            <div class="alert alert-warning" role="alert" invisible="not matheel_warning">
+                                <strong>ZATCA filing is paused, invoices stay queued | الإرسال متوقف والفواتير في الانتظار: </strong>
+                                <field name="matheel_warning" class="oe_inline"/>
+                            </div>
                             <div class="row"><label for="matheel_api_key" class="col-lg-4 o_light_label"/><field name="matheel_api_key" password="True" placeholder="mtl_…"/></div>
                             <div class="row"><label for="matheel_environment" class="col-lg-4 o_light_label"/><field name="matheel_environment"/></div>
                             <div class="row"><label for="matheel_legal_name_ar" class="col-lg-4 o_light_label"/><field name="matheel_legal_name_ar"/></div>
