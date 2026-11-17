@@ -1,0 +1,52 @@
+<!-- Odoo App Store page for the Matheel ZATCA connector: what it does, setup in three steps, pricing, support. -->
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="max-width:960px;margin:auto">
+    <h2 class="oe_slogan" style="color:#18181b">ZATCA Phase 2 e-invoicing for Odoo, without certificates</h2>
+    <h3 class="oe_slogan" dir="rtl" style="color:#63636b">فوترة زاتكا المرحلة الثانية من أودو، بدون شهادات ولا إعدادات معقّدة</h3>
+    <img src="banner.png" alt="Matheel ZATCA connector" style="width:100%;border-radius:12px;margin:16px 0"/>
+    <p style="font-size:17px">
+      Every customer invoice and credit note you post in Odoo is <b>cleared</b> (B2B) or <b>reported</b> (B2C) to ZATCA
+      automatically. ZATCA's stamped XML and a bilingual Arabic/English PDF/A-3 are attached to the invoice, and the ZATCA QR
+      is printed on Odoo's own invoice. The signing, certificates (CSID), hashing chain and ZATCA's rule changes are handled
+      by <a href="https://matheel.app">Matheel</a>, a Saudi ZATCA API, so there is nothing to install on your server.
+    </p>
+    <div dir="rtl" style="font-size:17px;background:#fafafa;border:1px solid #e4e4e7;border-radius:12px;padding:16px 20px;margin:16px 0">
+      كل فاتورة أو إشعار دائن تُرحّله في أودو يتم اعتماده (B2B) أو الإبلاغ عنه (B2C) لهيئة الزكاة والضريبة والجمارك تلقائياً.
+      ملف XML المعتمد من الهيئة وPDF عربي وإنجليزي يُرفقان بالفاتورة، ورمز QR يظهر في فاتورة أودو المطبوعة.
+      التوقيع والشهادات وسلسلة الفواتير وتحديثات قواعد الهيئة كلها على ماثل.
+    </div>
+
+    <h3>Set up in three steps · ثلاث خطوات</h3>
+    <ol style="font-size:16px">
+      <li>Install the module. Fill the company's VAT number, CR, address and building number.</li>
+      <li>Settings → Accounting → <b>ZATCA e-invoicing (Matheel)</b>: keep <b>Sandbox</b> and leave the key empty to try it free,
+        or paste your Matheel key and the OTP from the <a href="https://fatoora.zatca.gov.sa">Fatoora portal</a>.</li>
+      <li>Press <b>Register device with ZATCA</b>. Done: post an invoice and watch its ZATCA badge turn green.</li>
+    </ol>
+
+    <h3>What's included</h3>
+    <ul style="font-size:16px">
+      <li>Standard (B2B, clearance) and simplified (B2C, reporting) invoices, credit notes linked to the original invoice.</li>
+      <li>Discounts, multiple VAT categories (standard, zero-rated, exempt, out of scope with VATEX codes).</li>
+      <li>A strict invoice chain: invoices are filed one at a time in posting order, and retried by themselves when ZATCA is down.</li>
+      <li>VAT rounded the way ZATCA computes it, so Odoo's totals equal the legal invoice to the halala.</li>
+      <li>An accepted invoice can't be reset to draft: corrections go through a credit note, as the law requires.</li>
+      <li>Certificate renewal with a new OTP, from the same settings screen. Works on Odoo Community and Enterprise.</li>
+    </ul>
+
+    <h3>Pricing · الأسعار</h3>
+    <p style="font-size:16px">
+      The module is free and open source (LGPL-3). The sandbox is free. Live filing needs a Matheel plan:
+      <b>SAR 590 per year per device, unlimited invoices</b>, see <a href="https://matheel.app/#pricing">matheel.app</a>.
+      Odoo partners: ask about the partner programme at <a href="mailto:hello@matheel.app">hello@matheel.app</a>.
+    </p>
+
+    <h3>Support · الدعم</h3>
+    <p style="font-size:16px">
+      <a href="mailto:hello@matheel.app">hello@matheel.app</a> ·
+      <a href="https://matheel.app/docs">API docs</a> ·
+      <a href="https://matheel.app/akhta">ZATCA error codes explained (Arabic)</a> ·
+      <a href="https://github.com/matheel-app/matheel-odoo">source on GitHub</a>
+    </p>
+  </div>
+</section>

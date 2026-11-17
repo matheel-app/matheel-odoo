@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Building number next to the address on contacts (and so on the company, which is a contact). -->
+<odoo>
+    <record id="view_partner_form_matheel" model="ir.ui.view">
+        <field name="name">res.partner.form.matheel</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="matheel_building_number" placeholder="1234"/>
+            </field>
+        </field>
+    </record>
+</odoo>

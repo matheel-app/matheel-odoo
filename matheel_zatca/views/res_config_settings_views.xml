@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings → Accounting: a ZATCA (Matheel) block with key, environment, OTP and the register button. -->
+<odoo>
+    <record id="res_config_settings_view_form_matheel" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.matheel</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='account']" position="inside">
+                <block title="ZATCA e-invoicing (Matheel) | الفوترة الإلكترونية" name="matheel_zatca">
+                    <setting string="Connection" help="Leave the key empty and keep Sandbox to try it free. اترك المفتاح فاضي وجرّب على Sandbox مجاناً.">
+                        <field name="matheel_connected" invisible="1"/>
+                        <div class="content-group mt-2">
+                            <div class="row"><label for="matheel_api_key" class="col-lg-4 o_light_label"/><field name="matheel_api_key" password="True" placeholder="mtl_…"/></div>
+                            <div class="row"><label for="matheel_environment" class="col-lg-4 o_light_label"/><field name="matheel_environment"/></div>
+                            <div class="row"><label for="matheel_legal_name_ar" class="col-lg-4 o_light_label"/><field name="matheel_legal_name_ar"/></div>
+                            <div class="row"><label for="matheel_otp" class="col-lg-4 o_light_label"/><field name="matheel_otp" placeholder="Fatoora portal OTP (not needed on Sandbox)"/></div>
+                            <div class="mt-2" invisible="matheel_connected">
+                                <button name="action_matheel_connect" type="object" string="Register device with ZATCA | سجّل الجهاز" class="btn-primary"/>
+                            </div>
+                            <div class="mt-2" invisible="not matheel_connected">
+                                <span class="text-success">Connected | مربوط ✓</span>
+                                <field name="matheel_device_serial" class="ms-2"/>
+                                <div>Certificate expires: <field name="matheel_certificate_expires_at" class="oe_inline"/></div>
+                                <button name="action_matheel_renew" type="object" string="Renew certificate | جدّد الشهادة" class="btn-secondary mt-1"/>
+                                <button name="action_matheel_connect" type="object" string="Register a new device" class="btn-link mt-1"
+                                        confirm="A new device starts a new invoice chain. Continue?"/>
+                            </div>
+                            <div class="mt-2 text-muted">
+                                Company VAT number, CR and address (with building number) are sent to ZATCA. ·
+                                <a href="https://matheel.app/odoo" target="_blank">matheel.app/odoo</a>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

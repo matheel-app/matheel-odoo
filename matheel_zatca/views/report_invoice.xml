@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The ZATCA QR on Odoo's own printed invoice, once ZATCA has accepted it. -->
+<odoo>
+    <template id="report_invoice_document_matheel" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='qrcode']" position="before">
+            <div t-if="o.matheel_qr and o.matheel_state in ('reported', 'cleared')" class="mt-3" style="page-break-inside: avoid;">
+                <img t-att-src="'data:image/png;base64,%s' % o._matheel_qr_png()" style="width: 120px; height: 120px;"/>
+                <div class="small text-muted">ZATCA e-invoice | فاتورة إلكترونية</div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
